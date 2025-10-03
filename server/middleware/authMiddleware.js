@@ -14,7 +14,7 @@ export const protect = async (req, res, next) => {
         return res.status(401).json({ message: "User not found" });
       }
 
-      req.user = user; // attach full user object
+      req.user = user; 
       next();
     } catch (err) {
       return res.status(401).json({ message: "Invalid token" });
@@ -25,8 +25,10 @@ export const protect = async (req, res, next) => {
 };
 
 export const isAdmin = (req, res, next) => {
-  if (req.user.role !== "admin") {
-    return res.status(403).json({ message: "Access denied" });
+  if (req.user && req.user.role === "admin") {
+    next();
+  } else {
+    res.status(403).json({ message: "Access denied. Admins only." });
   }
-  next();
 };
+

@@ -13,23 +13,8 @@ export const createDoc = async (docData) => {
 };
 
 export const getDocs = async () => {
-  try {
-    const res = await axios.get(API_URL, getAuthHeader());
-    return res.data;
-  } catch (err) {
-    console.error("Error fetching docs:", err.response?.data || err.message);
-    throw err;
-  }
-};
-
-export const searchDoc = async (query) => {
-  try {
-    const res = await axios.get(`${API_URL}/search?q=${query}`, getAuthHeader());
-    return res.data;
-  } catch (err) {
-    console.error("Error searching docs:", err.response?.data || err.message);
-    throw err;
-  }
+  const res = await axios.get(API_URL, getAuthHeader());
+  return res.data;
 };
 
 export const updateDoc = async (id, docData) => {
@@ -39,5 +24,40 @@ export const updateDoc = async (id, docData) => {
 
 export const deleteDoc = async (id) => {
   const res = await axios.delete(`${API_URL}/${id}`, getAuthHeader());
+  return res.data;
+};
+
+export const searchDoc = async (q) => {
+  const res = await axios.get(
+    `${API_URL}/search?q=${encodeURIComponent(q)}`,
+    getAuthHeader()
+  );
+  return res.data;
+};
+
+export const semanticSearchDocs = async (query) => {
+  const res = await axios.post(
+    `${API_URL}/semantic-search`,
+    { query },
+    getAuthHeader()
+  );
+  return res.data;
+};
+
+export const generateSummaryAndTags = async (content) => {
+  const res = await axios.post(
+    `${API_URL}/generate-summary-tags`,
+    { content },
+    getAuthHeader()
+  );
+  return res.data;
+};
+
+export const askQuestion = async (question) => {
+  const res = await axios.post(
+    `${API_URL}/ask-question`,
+    { question },
+    getAuthHeader()
+  );
   return res.data;
 };

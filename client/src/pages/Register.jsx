@@ -1,10 +1,9 @@
 import { useState } from "react";
-import API from "../api";
 import { useNavigate } from "react-router-dom";
-
+import { register } from "../services/AuthService";
 
 export default function Register() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -12,8 +11,8 @@ export default function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await API.post("/auth/register", { name, email, password });
-      alert(" Registered! Now login.");
+      await register({ name, email, password });
+      alert("✅ Registered! Now login.");
       navigate("/login");
     } catch (err) {
       alert("❌ " + (err.response?.data?.message || err.message));

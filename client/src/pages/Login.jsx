@@ -1,24 +1,35 @@
 import { useState } from "react";
-import API from "../api";
+import { useNavigate } from "react-router-dom";
+import { login } from "../services/AuthService";
 
 export default function Login() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await API.post("/auth/login", { email, password });
-      localStorage.setItem("token", data.token);
-      alert(" Logged in!");
-      window.location.href = "/dashboard"; // redirect
+      const { token, user } = await login({ email, password });
+
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(user));
+
+      alert("✅ Login successful!");
+
+      if(user.role ==="admin"){
+        navigate("/admin");
+      }else{
+        navigate("/dashboard")
+      }
+
     } catch (err) {
       alert("❌ " + (err.response?.data?.message || err.message));
     }
   };
 
   return (
-    <div className="flex flex-col items-center mt-10">
+<div className="flex flex-col items-center mt-10">
       <h2 className="text-2xl font-bold mb-4">Login</h2>
       <form onSubmit={handleSubmit} className="flex flex-col gap-3 w-64">
         <input
@@ -42,3 +53,5 @@ export default function Login() {
     </div>
   );
 }
+
+

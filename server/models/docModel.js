@@ -6,6 +6,7 @@ const docSchema = new mongoose.Schema(
     content: { type: String, required: true },
     tags: [{ type: String }],
     summary: { type: String },
+    embedding: { type: [Number], index: "2dsphere" },
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
