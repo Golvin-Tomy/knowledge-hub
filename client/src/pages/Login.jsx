@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom"; // <-- added Link import
 import { login } from "../services/AuthService";
 
 export default function Login() {
@@ -17,19 +17,18 @@ export default function Login() {
 
       alert("✅ Login successful!");
 
-      if(user.role ==="admin"){
+      if (user.role === "admin") {
         navigate("/admin");
-      }else{
-        navigate("/dashboard")
+      } else {
+        navigate("/dashboard");
       }
-
     } catch (err) {
       alert("❌ " + (err.response?.data?.message || err.message));
     }
   };
 
   return (
-<div className="flex flex-col items-center mt-10">
+    <div className="flex flex-col items-center mt-10">
       <h2 className="text-2xl font-bold mb-4">Login</h2>
       <form onSubmit={handleSubmit} className="flex flex-col gap-3 w-64">
         <input
@@ -50,6 +49,13 @@ export default function Login() {
           Login
         </button>
       </form>
+
+      <h4 className="mt-4 text-sm">
+        Don't have an account?{" "}
+        <Link to="/register" className="text-blue-600 hover:underline">
+          Register here
+        </Link>
+      </h4>
     </div>
   );
 }
