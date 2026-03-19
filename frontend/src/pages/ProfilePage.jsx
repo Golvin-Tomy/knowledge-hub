@@ -1,9 +1,19 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
-  User, Mail, FileText, Users, Edit, Check,
-  X, Loader2, Shield, Calendar, ChevronRight,
-  UserMinus, Heart
+  User,
+  Mail,
+  FileText,
+  Users,
+  Edit,
+  Check,
+  X,
+  Loader2,
+  Shield,
+  Calendar,
+  ChevronRight,
+  UserMinus,
+  Heart,
 } from "lucide-react";
 import API from "../api";
 
@@ -18,7 +28,7 @@ export default function ProfilePage() {
 
   // Edit mode
   const [editing, setEditing] = useState(false);
-  const [form, setForm] = useState({ name: "", email: "" });
+  const [form, setForm] = useState({ name: "", email: "", password: "" });
   const [saving, setSaving] = useState(false);
   const [editError, setEditError] = useState("");
   const [editSuccess, setEditSuccess] = useState(false);
@@ -42,7 +52,7 @@ export default function ProfilePage() {
       setGroups(groupsRes.data);
       setDocCount(docsRes.data.length);
       setFollowing(followingRes.data);
-      setForm({ name: meRes.data.name, email: meRes.data.email });
+      setForm({ name: meRes.data.name, email: meRes.data.email, password: "" });
     } catch (err) {
       console.error("Failed to load profile:", err);
     } finally {
@@ -57,6 +67,10 @@ export default function ProfilePage() {
     try {
       setSaving(true);
       setEditError("");
+
+      const payload = { name: form.name, email: form.email };
+      if (form.password.trim()) payload.password = form.password;
+
       await API.put(`/users/${profile.id}`, form);
       const updated = { ...storedUser, name: form.name, email: form.email };
       localStorage.setItem("user", JSON.stringify(updated));
@@ -87,7 +101,7 @@ export default function ProfilePage() {
   const cancelEdit = () => {
     setEditing(false);
     setEditError("");
-    setForm({ name: profile.name, email: profile.email });
+    setForm({ name: profile.name, email: profile.email, password: "" });
   };
 
   if (loading) {
@@ -107,12 +121,13 @@ export default function ProfilePage() {
             <User className="text-green-600" size={24} />
             My Profile
           </h1>
-          <p className="text-sm text-gray-500 mt-0.5">Manage your account details</p>
+          <p className="text-sm text-gray-500 mt-0.5">
+            Manage your account details
+          </p>
         </div>
       </div>
 
       <div className="max-w-3xl mx-auto px-4 py-8 space-y-6">
-
         {/* Profile Card  */}
         <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-6">
           <div className="flex items-center gap-4 mb-6 pb-6 border-b border-gray-100">
@@ -122,20 +137,27 @@ export default function ProfilePage() {
               </span>
             </div>
             <div className="flex-1 min-w-0">
-              <h2 className="text-xl font-bold text-gray-800 truncate">{profile?.name}</h2>
+              <h2 className="text-xl font-bold text-gray-800 truncate">
+                {profile?.name}
+              </h2>
               <p className="text-gray-500 text-sm truncate">{profile?.email}</p>
               <div className="flex items-center gap-2 mt-1">
-                <span className={`text-xs px-2 py-0.5 rounded-full font-medium flex items-center gap-1 ${
-                  profile?.role === "admin"
-                    ? "bg-purple-100 text-purple-700"
-                    : "bg-green-100 text-green-700"
-                }`}>
+                <span
+                  className={`text-xs px-2 py-0.5 rounded-full font-medium flex items-center gap-1 ${
+                    profile?.role === "admin"
+                      ? "bg-purple-100 text-purple-700"
+                      : "bg-green-100 text-green-700"
+                  }`}
+                >
                   <Shield size={10} />
                   {profile?.role === "admin" ? "Admin" : "Member"}
                 </span>
                 <span className="text-xs text-gray-400 flex items-center gap-1">
                   <Calendar size={10} />
-                  Joined {new Date(profile?.createdAt || Date.now()).toLocaleDateString()}
+                  Joined{" "}
+                  {new Date(
+                    profile?.createdAt || Date.now(),
+                  ).toLocaleDateString()}
                 </span>
               </div>
             </div>
@@ -152,7 +174,9 @@ export default function ProfilePage() {
           {editing ? (
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Name
+                </label>
                 <input
                   type="text"
                   value={form.name}
@@ -161,7 +185,9 @@ export default function ProfilePage() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Email
+                </label>
                 <input
                   type="email"
                   value={form.email}
@@ -169,8 +195,27 @@ export default function ProfilePage() {
                   className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
                 />
               </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  New Password{" "}
+                  <span className="text-gray-400 font-normal">
+                    (leave blank to keep current)
+                  </span>
+                </label>
+                <input
+                  type="password"
+                  placeholder="Min 6 characters"
+                  value={form.password}
+                  onChange={(e) =>
+                    setForm({ ...form, password: e.target.value })
+                  }
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                />
+              </div>
               {editError && (
-                <p className="text-red-500 text-sm bg-red-50 px-3 py-2 rounded-lg">{editError}</p>
+                <p className="text-red-500 text-sm bg-red-50 px-3 py-2 rounded-lg">
+                  {editError}
+                </p>
               )}
               <div className="flex gap-3">
                 <button
@@ -184,7 +229,11 @@ export default function ProfilePage() {
                   disabled={saving}
                   className="flex-1 bg-green-600 hover:bg-green-700 text-white py-2.5 rounded-lg transition font-medium flex items-center justify-center gap-2 disabled:opacity-60"
                 >
-                  {saving ? <Loader2 size={15} className="animate-spin" /> : <Check size={15} />}
+                  {saving ? (
+                    <Loader2 size={15} className="animate-spin" />
+                  ) : (
+                    <Check size={15} />
+                  )}
                   {saving ? "Saving..." : "Save Changes"}
                 </button>
               </div>
@@ -232,7 +281,9 @@ export default function ProfilePage() {
               <Users className="text-green-600" size={20} />
             </div>
             <div>
-              <p className="text-2xl font-bold text-gray-800">{groups.length}</p>
+              <p className="text-2xl font-bold text-gray-800">
+                {groups.length}
+              </p>
               <p className="text-xs text-gray-500">Groups</p>
             </div>
           </div>
@@ -242,7 +293,9 @@ export default function ProfilePage() {
               <Heart className="text-pink-500" size={20} />
             </div>
             <div>
-              <p className="text-2xl font-bold text-gray-800">{following.length}</p>
+              <p className="text-2xl font-bold text-gray-800">
+                {following.length}
+              </p>
               <p className="text-xs text-gray-500">Following</p>
             </div>
           </div>
@@ -303,9 +356,11 @@ export default function ProfilePage() {
                       disabled={unfollowLoading[person._id]}
                       className="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full border border-gray-300 text-gray-500 hover:border-red-300 hover:text-red-500 transition disabled:opacity-60"
                     >
-                      {unfollowLoading[person._id]
-                        ? <Loader2 size={12} className="animate-spin" />
-                        : <UserMinus size={12} />}
+                      {unfollowLoading[person._id] ? (
+                        <Loader2 size={12} className="animate-spin" />
+                      ) : (
+                        <UserMinus size={12} />
+                      )}
                       Unfollow
                     </button>
                   </div>
@@ -340,9 +395,12 @@ export default function ProfilePage() {
                         </span>
                       </div>
                       <div>
-                        <p className="font-medium text-gray-800 text-sm">{group.name}</p>
+                        <p className="font-medium text-gray-800 text-sm">
+                          {group.name}
+                        </p>
                         <p className="text-xs text-gray-400">
-                          {group.members?.length} member{group.members?.length !== 1 ? "s" : ""}
+                          {group.members?.length} member
+                          {group.members?.length !== 1 ? "s" : ""}
                         </p>
                       </div>
                     </div>
@@ -360,7 +418,6 @@ export default function ProfilePage() {
             </div>
           </div>
         )}
-
       </div>
     </div>
   );

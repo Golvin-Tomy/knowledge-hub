@@ -1,4 +1,5 @@
 import User from "../models/userModel.js";
+import bcrypt from "bcryptjs";
 
 // Get all users
 export const getAllUsers = async (req, res) => {
@@ -13,24 +14,46 @@ export const getAllUsers = async (req, res) => {
 // Update user (name/email)
 export const updateUser = async (req, res) => {
   try {
-    const { name, email } = req.body;
+    const { name, email, password } = req.body;
+    if (
+      req.user._id.toString() !== req.params.id &&
+      req.user.role !== "admin"
+    ) {
+      return res
+        .status(403)
+        .json({ message: "You can only edit your own profile" });
+    }
     const user = await User.findById(req.params.id);
 
     if (!user) return res.status(404).json({ message: "User not found" });
 
-    // ✅ Check if new email is already taken by another user
-    if (email) {
+    if (email && email !== user.email) {
       const existingUser = await User.findOne({ email });
-      if (existingUser && existingUser._id.toString() !== user._id.toString()) {
+      if (existingUser) {
         return res.status(400).json({ message: "Email already in use" });
       }
     }
 
-    user.name = name || user.name;
-    user.email = email || user.email;
+    if (name) user.name = name;
+    if (email) user.email = email;
+
+    if (password) {
+      if (password.length < 6) {
+        return res
+          .status(400)
+          .json({ message: "Password must be at least 6 characters" });
+      }
+      const salt = await bcrypt.genSalt(10);
+      user.password = await bcrypt.hash(password, salt);
+    }
 
     const updatedUser = await user.save();
-    res.json(updatedUser);
+    res.json({
+      id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      role: updatedUser.role,
+    });
   } catch (error) {
     res.status(500).json({ message: "Server Error" });
   }
@@ -85,8 +108,10 @@ export const unfollowUser = async (req, res) => {
 // Get my following list
 export const getFollowing = async (req, res) => {
   try {
-    const me = await User.findById(req.user._id)
-      .populate("following", "name email");
+    const me = await User.findById(req.user._id).populate(
+      "following",
+      "name email",
+    );
     res.json(me.following);
   } catch (err) {
     res.status(500).json({ message: "Server error" });
