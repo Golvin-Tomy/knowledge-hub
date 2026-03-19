@@ -1,41 +1,58 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-const MODEL = "google/gemma-3-4b-it:free";
+const MODELS = [
+  "google/gemma-3-4b-it:free",
+  "qwen/qwen-2.5-7b-instruct:free",
+  "mistralai/mistral-7b-instruct:free",
+  "deepseek/deepseek-r1-distill-llama-8b:free",
+];
 
 async function chatCompletion(prompt) {
-
   const OPENROUTER_KEY = process.env.OPENROUTER_API_KEY;
-
-  console.log("Using OpenRouter key:", OPENROUTER_KEY ? "✅ " + OPENROUTER_KEY.slice(0, 15) + "..." : "❌ MISSING");
 
   if (!OPENROUTER_KEY) {
     throw new Error("OPENROUTER_API_KEY is not set in environment");
   }
 
-  const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${OPENROUTER_KEY}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      model: MODEL,
-      messages: [{ role: "user", content: prompt }],
-      max_tokens: 1000,
-    }),
-  });
+  // try each model until one works
+  for (const model of MODELS) {
+    try {
+      const response = await fetch(
+        "https://openrouter.ai/api/v1/chat/completions",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${OPENROUTER_KEY}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            model,
+            messages: [{ role: "user", content: prompt }],
+            max_tokens: 1000,
+          }),
+        },
+      );
 
-  if (!response.ok) {
-    const err = await response.text();
-    throw new Error(`OpenRouter error: ${err}`);
+      if (!response.ok) {
+        const err = await response.text();
+        console.warn(`Model ${model} failed, trying next...`);
+        continue;
+      }
+
+      const data = await response.json();
+      const text = data.choices[0]?.message?.content;
+      if (text) return text;
+    } catch (err) {
+      console.warn(`Model ${model} error:`, err.message);
+      continue;
+    }
   }
 
-  const data = await response.json();
-  return data.choices[0]?.message?.content || "";
+  throw new Error("All models failed or rate limited. Try again in a moment.");
 }
 
-// Embeddings via HuggingFace 
+// Embeddings via HuggingFace
 export async function getEmbedding(text) {
   const urls = [
     "https://router.huggingface.co/hf-inference/models/sentence-transformers/all-MiniLM-L6-v2/pipeline/feature-extraction",
@@ -68,11 +85,11 @@ export async function getEmbedding(text) {
   throw new Error("All HuggingFace embedding URLs failed");
 }
 
-// Text generation functions 
+// Text generation functions
 export async function summarizeText(content) {
   try {
     return await chatCompletion(
-      `Summarize this document in 2-3 sentences:\n${content}`
+      `Summarize this document in 2-3 sentences:\n${content}`,
     );
   } catch (err) {
     console.warn("Summarize error:", err.message);
@@ -83,9 +100,12 @@ export async function summarizeText(content) {
 export async function generateTags(content) {
   try {
     const text = await chatCompletion(
-      `Generate 5 short tags (comma separated, lowercase, no hashtags) for this:\n${content}`
+      `Generate 5 short tags (comma separated, lowercase, no hashtags) for this:\n${content}`,
     );
-    return text.split(",").map((t) => t.trim().toLowerCase()).filter(Boolean);
+    return text
+      .split(",")
+      .map((t) => t.trim().toLowerCase())
+      .filter(Boolean);
   } catch (err) {
     console.warn("Tags error:", err.message);
     return [];
