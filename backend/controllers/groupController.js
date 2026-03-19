@@ -153,6 +153,50 @@ export const leaveGroup = async (req, res) => {
   }
 };
 
+export const updateGroup = async (req, res) => {
+  try {
+    const { name, description } = req.body;
+    const group = await Group.findById(req.params.id);
+    if (!group) return res.status(404).json({ message: "Group not found" });
+    if (group.owner.toString() !== req.user._id.toString()) {
+      return res
+        .status(403)
+        .json({ message: "Only the owner can edit this group" });
+    }
+    if (name) group.name = name;
+    if (description !== undefined) group.description = description;
+    await group.save();
+    await group.populate("owner", "name email");
+    await group.populate("members", "name email");
+    res.json(group);
+  } catch (err) {
+    res.status(500).json({ message: "Error updating group" });
+  }
+};
+
+export const removeMember = async (req, res) => {
+  try {
+    const { memberId } = req.params;
+    const group = await Group.findById(req.params.id);
+    if (!group) return res.status(404).json({ message: "Group not found" });
+    if (group.owner.toString() !== req.user._id.toString()) {
+      return res
+        .status(403)
+        .json({ message: "Only the owner can remove members" });
+    }
+    if (memberId === req.user._id.toString()) {
+      return res
+        .status(400)
+        .json({ message: "Owner cannot remove themselves" });
+    }
+    group.members = group.members.filter((m) => m.toString() !== memberId);
+    await group.save();
+    res.json({ message: "Member removed successfully" });
+  } catch (err) {
+    res.status(500).json({ message: "Error removing member" });
+  }
+};
+
 export const deleteGroup = async (req, res) => {
   try {
     const group = await Group.findById(req.params.id);
@@ -227,12 +271,10 @@ export const groupSemanticSearch = async (req, res) => {
     res.json(docs);
   } catch (error) {
     console.error("Error in group semantic search:", error);
-    res
-      .status(500)
-      .json({
-        message: "Error in group semantic search",
-        error: error.message,
-      });
+    res.status(500).json({
+      message: "Error in group semantic search",
+      error: error.message,
+    });
   }
 };
 

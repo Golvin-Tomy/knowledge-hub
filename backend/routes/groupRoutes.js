@@ -7,6 +7,8 @@ import {
   getGroupDocs,
   leaveGroup,
   deleteGroup,
+  updateGroup,
+  removeMember,
   groupSemanticSearch,
   groupAskAI,
 } from "../controllers/groupController.js";
@@ -21,9 +23,10 @@ router.post("/", createGroup);
 router.post("/join", joinGroup);
 router.get("/", getMyGroups);
 router.get("/:id", getGroupById);
+router.put("/:id", protect, updateGroup);
+router.delete("/:id/members/:memberId", protect, removeMember);
 router.delete("/:id", deleteGroup);
 router.post("/:id/leave", leaveGroup);
-
 router.get("/:id/docs", getGroupDocs);
 
 router.post("/:id/semantic-search", groupSemanticSearch);

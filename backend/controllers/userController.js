@@ -49,3 +49,46 @@ export const deleteUser = async (req, res) => {
     res.status(500).json({ message: "Server Error" });
   }
 };
+
+// Follow a user
+export const followUser = async (req, res) => {
+  try {
+    const targetId = req.params.id;
+    if (targetId === req.user._id.toString()) {
+      return res.status(400).json({ message: "You can't follow yourself" });
+    }
+    const me = await User.findById(req.user._id);
+    if (me.following.includes(targetId)) {
+      return res.status(400).json({ message: "Already following" });
+    }
+    me.following.push(targetId);
+    await me.save();
+    res.json({ message: "Followed successfully" });
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+// Unfollow a user
+export const unfollowUser = async (req, res) => {
+  try {
+    const targetId = req.params.id;
+    const me = await User.findById(req.user._id);
+    me.following = me.following.filter((id) => id.toString() !== targetId);
+    await me.save();
+    res.json({ message: "Unfollowed successfully" });
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+// Get my following list
+export const getFollowing = async (req, res) => {
+  try {
+    const me = await User.findById(req.user._id)
+      .populate("following", "name email");
+    res.json(me.following);
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+};

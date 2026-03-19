@@ -320,7 +320,7 @@ export const adminDeleteDoc = async (req, res) => {
 export const getPublicDocs = async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
-    const limit = 20;
+    const limit = parseInt(req.query.limit) || 20;
     const skip = (page - 1) * limit;
 
     const docs = await Doc.find({ isPublic: true })
