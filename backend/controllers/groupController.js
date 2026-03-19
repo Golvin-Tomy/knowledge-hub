@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import Group from "../models/groupModel.js";
 import Doc from "../models/docModel.js";
 
@@ -250,7 +251,7 @@ export const groupSemanticSearch = async (req, res) => {
           path: "embedding",
           numCandidates: 20,
           limit: 5,
-          filter: { groupId: { $eq: groupId } },
+          filter: { groupId: { $eq: new mongoose.Types.ObjectId(groupId) } },
         },
       },
       {
@@ -280,6 +281,7 @@ export const groupSemanticSearch = async (req, res) => {
 
 import { getEmbedding as embed, textModel } from "../utils/gemini.js";
 
+
 export const groupAskAI = async (req, res) => {
   try {
     const { question } = req.body;
@@ -307,7 +309,7 @@ export const groupAskAI = async (req, res) => {
           path: "embedding",
           numCandidates: 20,
           limit: 5,
-          filter: { groupId: { $eq: groupId } },
+          filter: { groupId: { $eq: new mongoose.Types.ObjectId(groupId) } },
         },
       },
       {

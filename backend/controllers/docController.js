@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import Doc from "../models/docModel.js";
 import {
   summarizeText,
@@ -167,7 +168,7 @@ export const semanticSearch = async (req, res) => {
           numCandidates: 20,
           limit: 5,
           filter: {
-            createdBy: { $eq: req.user._id },
+            createdBy: { $eq: new mongoose.Types.ObjectId(req.user._id) },
             groupId: { $eq: null },
           },
         },
@@ -214,7 +215,7 @@ export const askQuestion = async (req, res) => {
           numCandidates: 20,
           limit: 5,
           filter: {
-            createdBy: { $eq: req.user._id },
+            createdBy: { $eq: new mongoose.Types.ObjectId(req.user._id) },
             groupId: { $eq: null },
           },
         },

@@ -1,9 +1,12 @@
-import express from "express";
-import mongoose from "mongoose";
-import cors from "cors";
 import dotenv from "dotenv";
 
 dotenv.config();
+console.log("OpenRouter key:", process.env.OPENROUTER_API_KEY ? "✅ Loaded" : "❌ MISSING");
+console.log("HuggingFace key:", process.env.HUGGINGFACE_TOKEN ? "✅ Loaded" : "❌ MISSING");
+
+import express from "express";
+import mongoose from "mongoose";
+import cors from "cors";
 
 import authRoutes from "./routes/authRoutes.js";
 import docRoutes from "./routes/docRoutes.js";
