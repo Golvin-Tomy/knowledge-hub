@@ -2,10 +2,11 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const MODELS = [
+  "deepseek/deepseek-r1-distill-llama-8b:free",
   "google/gemma-3-4b-it:free",
   "qwen/qwen-2.5-7b-instruct:free",
   "mistralai/mistral-7b-instruct:free",
-  "deepseek/deepseek-r1-distill-llama-8b:free",
+  ,
 ];
 
 async function chatCompletion(prompt) {
