@@ -1,8 +1,14 @@
 import dotenv from "dotenv";
 
 dotenv.config();
-console.log("OpenRouter key:", process.env.OPENROUTER_API_KEY ? "✅ Loaded" : "❌ MISSING");
-console.log("HuggingFace key:", process.env.HUGGINGFACE_TOKEN ? "✅ Loaded" : "❌ MISSING");
+console.log(
+  "OpenRouter key:",
+  process.env.OPENROUTER_API_KEY ? "✅ Loaded" : "❌ MISSING",
+);
+console.log(
+  "HuggingFace key:",
+  process.env.HUGGINGFACE_TOKEN ? "✅ Loaded" : "❌ MISSING",
+);
 
 import express from "express";
 import mongoose from "mongoose";
@@ -18,7 +24,7 @@ const app = express();
 app.use(express.json());
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "*",
     credentials: true,
   }),
 );
@@ -34,6 +40,8 @@ app.get("/", (req, res) => res.send("API is running"));
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() =>
-    app.listen(5000, () => console.log("✅ Server running on port 5000")),
+    app.listen(process.env.PORT || 5000, () =>
+      console.log("✅ Server running on port 5000"),
+    ),
   )
   .catch((err) => console.error("❌ DB connection error:", err));
