@@ -24,13 +24,7 @@ const app = express();
 app.use(express.json());
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "https://knowledge-hub-ruddy.vercel.app",
-      "https://knowledge-hub-woad.vercel.app",
-      "https://knowledgehub-frontend.vercel.app", // ✅ add new URL
-    ],
-    credentials: true,
+    origin: "*",
   }),
 );
 
