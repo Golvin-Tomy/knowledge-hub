@@ -28,7 +28,7 @@ app.use(
       "http://localhost:5173",
       "https://knowledge-hub-ruddy.vercel.app",
       "https://knowledge-hub-woad.vercel.app",
-      "https://knowledgehub-frontend.vercel.app", // ✅ add new URL
+      "https://knowledgehub-frontend.vercel.app", 
     ],
     credentials: true,
   }),
