@@ -1,4 +1,4 @@
-import API from "./api";
+import API from "../api";
 
 // Login user
 export const login = async (data) => {
