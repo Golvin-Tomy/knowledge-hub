@@ -6,7 +6,7 @@ const MODELS = [
   "google/gemma-3-4b-it:free",
   "qwen/qwen-2.5-7b-instruct:free",
   "mistralai/mistral-7b-instruct:free",
-  ,
+  
 ];
 
 async function chatCompletion(prompt) {

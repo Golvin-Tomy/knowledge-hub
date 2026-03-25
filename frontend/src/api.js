@@ -2,7 +2,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://knowledge-hub-hbmu.onrender.com/api",
+  baseURL: "http://localhost:5000/api",
 });
 
 // Attach token every request
