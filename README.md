@@ -103,13 +103,15 @@ Knowledge-hub/
 
 ## 🔑 Demo Account
 Email: `demo@knowledgehub.com`
+
 Password: `Demo@123`
 
 ## 👨‍💻 Author
  
 **Golvin Tomy**
+
 https://www.linkedin.com/in/golvin-tomy-aa1901244/
 
 ## 📄 License
+
 MIT
-```
