@@ -1,100 +1,115 @@
-Knowledge Hub
+# 🧠 Knowledge Hub — AI-Powered Collaborative Learning Platform
 
-A smart document management and AI-powered knowledge system that allows users to upload, search, and interact with their personal documents using intelligent search and question-answering features.
+A full-stack AI-powered knowledge management platform where students can organize personal notes, collaborate in groups, and get intelligent answers using Retrieval-Augmented Generation (RAG).
 
-  Features
+## 🌐 Live Demo
+[knowledge-hub.vercel.app](https://knowledge-hub-ten-lovat.vercel.app)
 
-User Authentication: Secure login and registration with JWT-based authentication.
+## ✨ Features
 
-Role Management: Admin and user roles with protected routes.
+### 📝 Personal Notes
+- Create, edit, and delete personal notes
+- AI-generated summaries and tags on every note
+- Keyword search and semantic (meaning-based) search
+- Ask AI questions answered from your own notes (RAG)
 
-Document Upload: Users can add, edit, and delete their own documents.
+### 👥 Group Collaboration
+- Create study groups with auto-generated invite codes
+- Join groups via invite code
+- Share notes with group members
+- Group semantic search — searches all members' notes
+- Group Ask AI — answers generated from group notes only
 
-AI Summarization: Automatically generates summaries and tags for uploaded documents.
+### 🤖 AI Features
+- **Semantic Search** — finds notes by meaning, not just keywords
+- **RAG-based Q&A** — AI answers using only your notes as context
+- **Auto Summary** — AI summarizes every note on save
+- **Auto Tags** — AI generates relevant tags automatically
 
-Semantic Search: Search documents using AI embeddings for meaning-based results.
+### 🌍 Social Feed
+- Public knowledge feed
+- Follow/unfollow users
+- Personalized feed showing only followed users' posts
+- Load more pagination
 
-Ask AI: Ask questions directly, and the AI responds based on document context.
+### 🔐 Authentication & Roles
+- JWT-based authentication
+- Role-based access (Admin / User)
+- Admin panel for managing users and documents
+- Profile page with edit and following list
 
-Admin Panel: Manage users and documents with edit/delete access.
+## 🛠️ Tech Stack
 
-Responsive UI: Built with React and Tailwind CSS for a smooth user experience.
+### Frontend
+- React 18 + Vite
+- Tailwind CSS
+- React Router v6
+- Axios
+- Lucide React Icons
 
-  Tech Stack
+### Backend
+- Node.js + Express
+- MongoDB + Mongoose
+- JWT Authentication
+- BCrypt password hashing
 
-Frontend: React, Tailwind CSS, Lucide Icons, React Router
-Backend: Node.js, Express.js, JWT Authentication
-Database: MongoDB Atlas
-AI Integration: Google Gemini API (text summarization, tagging, semantic search)
-Other Tools: dotenv, bcryptjs, cors, mongoose
+### AI & ML
+- **OpenRouter API** — LLM text generation (RAG, summarization, tagging)
+- **HuggingFace** — `all-MiniLM-L6-v2` sentence embeddings
+- **MongoDB Atlas Vector Search** — semantic similarity search
 
-📂 Folder Structure
-backend/
-│
-├── controllers/
-│   ├── authController.js
-│   ├── docController.js
-│   ├── searchController.js
-│   └── userController.js
-│
-├── middleware/
-│   └── authMiddleware.js
-│
-├── models/
-│   ├── userModel.js
-│   └── docModel.js
-│
-├── routes/
-│   ├── authRoutes.js
-│   ├── docRoutes.js
-│   ├── searchRoutes.js
-│   └── userRoutes.js
-│
-├── utils/
-│   └── gemini.js
-│
-└── index.js
+## 🏗️ Architecture
+```
+Frontend (React/Vite) → Vercel
+Backend (Node/Express) → Render
+Database (MongoDB Atlas) → Cloud
+Vector Search → MongoDB Atlas Vector Index
+Embeddings → HuggingFace MiniLM (384 dimensions)
+LLM → OpenRouter (Llama/Gemma free models)
+```
 
-⚙️ Installation and Setup
+## 📁 Project Structure
+```
+Knowledge-hub/
+├── backend/
+│   ├── controllers/
+│   │   ├── authController.js
+│   │   ├── docController.js
+│   │   ├── groupController.js
+│   │   └── userController.js
+│   ├── models/
+│   │   ├── userModel.js
+│   │   ├── docModel.js
+│   │   └── groupModel.js
+│   ├── routes/
+│   ├── middleware/
+│   ├── utils/
+│   │   └── gemini.js (AI utilities)
+│   └── server.js
+└── frontend/
+    └── src/
+        ├── pages/
+        │   ├── Dashboard.jsx
+        │   ├── MyDocsPage.jsx
+        │   ├── GroupsPage.jsx
+        │   ├── GroupDetailPage.jsx
+        │   ├── QAPage.jsx
+        │   ├── ProfilePage.jsx
+        │   ├── Login.jsx
+        │   └── Register.jsx
+        ├── components/
+        └── api.js
+```
 
-Clone the repository
-git clone https://github.com/your-username/knowledge-hub.git
-cd knowledge-hub
+## 🔑 Demo Account
+Email: `demo@knowledgehub.com`
+Password: `Demo@123`
 
+## 👨‍💻 Author
+ 
+**Golvin Tomy**
+https://www.linkedin.com/in/golvin-tomy-aa1901244/
 
-Install dependencies
-npm install
-
-
-Run the server
-npm run dev
-
-
-Frontend
-cd frontend
-npm install
-npm run dev
-
-🔐 Authentication Flow
-
-JWT Tokens are generated upon successful login or registration.
-
-Protected routes ensure only authorized users can create or view documents.
-
-Admin routes are restricted to users with role: "admin".
-
-🧩 AI Features
-
-Summarization: Uses Gemini AI to summarize document content automatically.
-
-Tag Generation: Generates keyword tags for faster search.
-
-Semantic Search: Finds documents with similar meaning using embeddings.
-
-Ask AI: Users can ask natural language questions, and AI responds contextually.
-
-
-
-Golvin Tomy
-Entry-Level Full-Stack Developer (MERN)
-GitHub: github.com/Golvin-Tomy
+## 📄 License
+MIT
+```
