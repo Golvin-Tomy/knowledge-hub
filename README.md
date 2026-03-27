@@ -101,11 +101,6 @@ Knowledge-hub/
         └── api.js
 ```
 
-## 🔑 Demo Account
-Email: `demo@knowledgehub.com`
-
-Password: `Demo@123`
-
 ## 👨‍💻 Author
  
 **Golvin Tomy**
