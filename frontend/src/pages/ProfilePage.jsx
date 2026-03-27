@@ -130,7 +130,7 @@ export default function ProfilePage() {
       <div className="max-w-3xl mx-auto px-4 py-8 space-y-6">
         {/* Profile Card  */}
         <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-6">
-          <div className="flex items-center gap-4 mb-6 pb-6 border-b border-gray-100">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-6 pb-6 border-b border-gray-100">
             <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center shadow-md flex-shrink-0">
               <span className="text-white font-bold text-2xl">
                 {profile?.name?.charAt(0).toUpperCase()}
@@ -164,7 +164,7 @@ export default function ProfilePage() {
             {!editing && (
               <button
                 onClick={() => setEditing(true)}
-                className="flex items-center gap-1.5 border border-gray-300 text-gray-600 hover:border-green-500 hover:text-green-600 px-3 py-2 rounded-lg text-sm font-medium transition flex-shrink-0"
+                className="flex items-center justify-center gap-1.5 w-full sm:w-auto border border-gray-300 text-gray-600 hover:border-green-500 hover:text-green-600 px-3 py-2 rounded-lg text-sm font-medium transition flex-shrink-0"
               >
                 <Edit size={14} /> Edit
               </button>
@@ -259,10 +259,10 @@ export default function ProfilePage() {
         </div>
 
         {/* Stats Row  */}
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           <div
             onClick={() => navigate("/my-docs")}
-            className="bg-white rounded-2xl shadow-md border border-gray-100 p-5 flex items-center gap-3 cursor-pointer hover:shadow-lg hover:-translate-y-0.5 transition-all"
+            className="bg-white rounded-2xl shadow-md border border-gray-100 p-4 sm:p-5 flex items-center gap-3 cursor-pointer hover:shadow-lg hover:-translate-y-0.5 transition-all"
           >
             <div className="w-11 h-11 bg-blue-100 rounded-xl flex items-center justify-center flex-shrink-0">
               <FileText className="text-blue-600" size={20} />
@@ -336,7 +336,7 @@ export default function ProfilePage() {
                 return (
                   <div
                     key={person._id}
-                    className="flex items-center justify-between px-4 py-3 rounded-xl border border-gray-100 hover:bg-gray-50 transition"
+                    className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-0 justify-between px-4 py-3 rounded-xl border border-gray-100 hover:bg-gray-50 transition"
                   >
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full flex items-center justify-center flex-shrink-0">
@@ -354,7 +354,7 @@ export default function ProfilePage() {
                     <button
                       onClick={() => handleUnfollow(person._id)}
                       disabled={unfollowLoading[person._id]}
-                      className="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full border border-gray-300 text-gray-500 hover:border-red-300 hover:text-red-500 transition disabled:opacity-60"
+                      className="flex items-center justify-center gap-1.5 w-full sm:w-auto text-xs font-medium px-3 py-1.5 rounded-full border border-gray-300 text-gray-500 hover:border-red-300 hover:text-red-500 transition disabled:opacity-60"
                     >
                       {unfollowLoading[person._id] ? (
                         <Loader2 size={12} className="animate-spin" />
@@ -386,7 +386,7 @@ export default function ProfilePage() {
                   <div
                     key={group._id}
                     onClick={() => navigate(`/groups/${group._id}`)}
-                    className="flex items-center justify-between px-4 py-3 rounded-xl border border-gray-100 hover:bg-gray-50 cursor-pointer transition"
+                    className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-0 justify-between px-4 py-3 rounded-xl border border-gray-100 hover:bg-gray-50 cursor-pointer transition"
                   >
                     <div className="flex items-center gap-3">
                       <div className="w-9 h-9 bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg flex items-center justify-center flex-shrink-0">

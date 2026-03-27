@@ -177,7 +177,7 @@ export default function MyDocsPage() {
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       {/* Header */}
       <div className="bg-white shadow-sm border-b">
-        <div className="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
+        <div className="max-w-4xl mx-auto px-4 py-4 flex flex-col sm:flex-row gap-3 sm:gap-0 justify-between items-start sm:items-center">
           <div>
             <h1 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
               <FileText className="text-green-600" size={24} />
@@ -190,7 +190,7 @@ export default function MyDocsPage() {
           </div>
           <button
             onClick={openAdd}
-            className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-medium transition"
+            className="flex items-center justify-center gap-2 w-full sm:w-auto bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-medium transition"
           >
             <Plus size={16} /> Add Note
           </button>
@@ -260,7 +260,7 @@ export default function MyDocsPage() {
         {/* keyword tab */}
         {activeTab === "search" && (
           <div>
-            <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-6 mb-6">
+            <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-4 sm:p-6 mb-6">
               <h2 className="text-lg font-bold text-gray-800 mb-1 flex items-center gap-2">
                 <Search className="text-green-600" size={20} />
                 Keyword Search
@@ -268,7 +268,7 @@ export default function MyDocsPage() {
               <p className="text-gray-500 text-sm mb-4">
                 Search your personal notes by title, content, or tags.
               </p>
-              <div className="flex gap-2">
+              <div className="flex flex-col sm:flex-row gap-2">
                 <input
                   type="text"
                   placeholder="Search your notes..."
@@ -280,7 +280,7 @@ export default function MyDocsPage() {
                 <button
                   onClick={handleKeywordSearch}
                   disabled={keywordLoading}
-                  className="flex items-center gap-2 bg-green-600 hover:bg-green-700 disabled:opacity-60 text-white px-5 py-3 rounded-lg font-medium transition"
+                  className="flex items-center justify-center gap-2 w-full sm:w-auto bg-green-600 hover:bg-green-700 disabled:opacity-60 text-white px-5 py-3 rounded-lg font-medium transition"
                 >
                   {keywordLoading ? (
                     <Loader2 size={16} className="animate-spin" />
@@ -325,7 +325,7 @@ export default function MyDocsPage() {
         {/* smart search tab */}
         {activeTab === "semantic" && (
           <div>
-            <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-6 mb-6">
+            <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-4 sm:p-6 mb-6">
               <h2 className="text-lg font-bold text-gray-800 mb-1 flex items-center gap-2">
                 <Sparkles className="text-green-600" size={20} />
                 Smart Search
@@ -334,7 +334,7 @@ export default function MyDocsPage() {
                 Search by meaning — finds related notes even if the exact words
                 don't match.
               </p>
-              <div className="flex gap-2">
+              <div className="flex flex-col sm:flex-row gap-2">
                 <input
                   type="text"
                   placeholder='e.g. "how does the water cycle work?"'
@@ -346,7 +346,7 @@ export default function MyDocsPage() {
                 <button
                   onClick={handleSemanticSearch}
                   disabled={semanticLoading}
-                  className="flex items-center gap-2 bg-green-600 hover:bg-green-700 disabled:opacity-60 text-white px-5 py-3 rounded-lg font-medium transition"
+                  className="flex items-center justify-center gap-2 w-full sm:w-auto bg-green-600 hover:bg-green-700 disabled:opacity-60 text-white px-5 py-3 rounded-lg font-medium transition"
                 >
                   {semanticLoading ? (
                     <Loader2 size={16} className="animate-spin" />
@@ -396,7 +396,7 @@ export default function MyDocsPage() {
       {/* add,edit */}
       {showModal && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center px-4">
-          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg p-6">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg p-4 sm:p-6">
             <div className="flex justify-between items-center mb-5">
               <h2 className="text-xl font-bold text-gray-800">
                 {editingDoc ? "Edit Note" : "Add New Note"}
@@ -491,7 +491,7 @@ export default function MyDocsPage() {
           className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center px-4"
           onClick={(e) => e.target === e.currentTarget && setSelectedDoc(null)}
         >
-          <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full p-6 relative max-h-[85vh] flex flex-col">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full p-4 sm:p-6 relative max-h-[85vh] flex flex-col">
             <button
               onClick={() => setSelectedDoc(null)}
               className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
@@ -547,7 +547,7 @@ export default function MyDocsPage() {
               {selectedDoc.content}
             </div>
 
-            <div className="flex gap-2 mt-4 pt-4 border-t border-gray-100">
+            <div className="flex flex-col sm:flex-row gap-2 mt-4 pt-4 border-t border-gray-100">
               <button
                 onClick={(e) => {
                   setSelectedDoc(null);
@@ -629,7 +629,7 @@ function DocCard({ doc, onView, onEdit, onDelete, deleting, score }) {
           <Clock size={11} />
           {new Date(doc.createdAt).toLocaleDateString()}
         </span>
-        <div className="flex gap-2" onClick={(e) => e.stopPropagation()}>
+        <div className="flex flex-col sm:flex-row gap-2" onClick={(e) => e.stopPropagation()}>
           <button
             onClick={onEdit}
             className="flex items-center gap-1 bg-yellow-400 hover:bg-yellow-500 text-white px-3 py-1 rounded-lg text-xs font-medium transition"

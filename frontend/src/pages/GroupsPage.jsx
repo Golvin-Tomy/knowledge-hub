@@ -99,9 +99,9 @@ export default function GroupsPage() {
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       {/* Header */}
       <div className="bg-white shadow-sm border-b">
-        <div className="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
+        <div className="max-w-4xl mx-auto px-3 md:px-4 py-3 md:py-4 flex flex-wrap justify-between items-center gap-3">
           <div>
-            <h1 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
+            <h1 className="text-lg md:text-2xl font-bold text-gray-800 flex items-center gap-2">
               <Users className="text-green-600" size={24} />
               My Groups
             </h1>
@@ -109,7 +109,7 @@ export default function GroupsPage() {
               Collaborate and share notes with your classmates
             </p>
           </div>
-          <div className="flex gap-3">
+          <div className="flex flex-wrap gap-2 md:gap-3">
             <button
               onClick={() => {
                 setShowJoinModal(true);
@@ -132,7 +132,7 @@ export default function GroupsPage() {
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto px-4 py-8">
+      <div className="max-w-4xl mx-auto px-3 md:px-4 py-6 md:py-8">
         {loading ? (
           <div className="flex justify-center py-20">
             <Loader2 className="animate-spin text-green-600" size={36} />
@@ -149,7 +149,7 @@ export default function GroupsPage() {
               Create a group for your class or join one with an invite code from
               your classmates.
             </p>
-            <div className="flex gap-3 justify-center">
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <button
                 onClick={() => setShowJoinModal(true)}
                 className="border border-green-600 text-green-600 hover:bg-green-50 px-5 py-2 rounded-lg font-medium transition"
@@ -172,11 +172,11 @@ export default function GroupsPage() {
               return (
                 <div
                   key={group._id}
-                  className="bg-white rounded-2xl shadow-md border border-gray-100 p-6 hover:shadow-xl transition-all hover:-translate-y-0.5 cursor-pointer"
+                  className="bg-white rounded-2xl shadow-md border border-gray-100 p-4 md:p-6 hover:shadow-xl transition-all hover:-translate-y-0.5 cursor-pointer"
                   onClick={() => navigate(`/groups/${group._id}`)}
                 >
                   {/* Group pic and name */}
-                  <div className="flex items-start justify-between mb-4">
+                  <div className="flex flex-wrap items-start justify-between gap-2 mb-4">
                     <div className="flex items-center gap-3">
                       <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-sm">
                         <span className="text-white font-bold text-lg">
@@ -184,7 +184,7 @@ export default function GroupsPage() {
                         </span>
                       </div>
                       <div>
-                        <h3 className="font-bold text-gray-800 text-lg leading-tight">
+                        <h3 className="font-bold text-gray-800 text-base md:text-lg leading-tight">
                           {group.name}
                         </h3>
                         {isOwner && (
@@ -218,7 +218,7 @@ export default function GroupsPage() {
 
                   {/* Invite Code  */}
                   <div
-                    className="flex items-center justify-between bg-gray-50 border border-gray-200 rounded-lg px-3 py-2"
+                    className="flex flex-wrap items-center justify-between gap-2 bg-gray-50 border border-gray-200 rounded-lg px-3 py-2"
                     onClick={(e) => e.stopPropagation()}
                   >
                     <div>
@@ -250,7 +250,7 @@ export default function GroupsPage() {
 
       {showCreateModal && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center px-4">
-          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md p-4 md:p-6">
             <div className="flex justify-between items-center mb-5">
               <h2 className="text-xl font-bold text-gray-800">
                 Create a Group

@@ -183,8 +183,8 @@ export default function GroupDetailPage() {
 
       {/* Header */}
       <div className="bg-white shadow-sm border-b">
-        <div className="max-w-4xl mx-auto px-4 py-4">
-          <div className="flex items-center justify-between mb-3">
+        <div className="max-w-4xl mx-auto px-3 md:px-4 py-3 md:py-4">
+          <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
             <div className="flex items-center gap-3">
               <button onClick={() => navigate("/groups")} className="text-gray-400 hover:text-gray-600 transition">
                 <ArrowLeft size={22} />
@@ -194,7 +194,7 @@ export default function GroupDetailPage() {
                   <span className="text-white font-bold">{group.name.charAt(0).toUpperCase()}</span>
                 </div>
                 <div>
-                  <h1 className="text-xl font-bold text-gray-800">{group.name}</h1>
+                  <h1 className="text-lg md:text-xl font-bold text-gray-800">{group.name}</h1>
                   <p className="text-xs text-gray-500 flex items-center gap-1">
                     <Users size={12} />
                     {group.members?.length} member{group.members?.length !== 1 ? "s" : ""}
@@ -205,7 +205,7 @@ export default function GroupDetailPage() {
             </div>
 
             {/* Actions */}
-            <div className="flex items-center gap-2 flex-wrap justify-end">
+            <div className="flex flex-wrap items-center gap-2 justify-start md:justify-end">
               <button
                 onClick={copyInviteCode}
                 className="text-xs flex items-center gap-1 text-gray-500 hover:text-green-600 border border-gray-200 hover:border-green-400 px-3 py-1.5 rounded-lg transition"
@@ -253,7 +253,7 @@ export default function GroupDetailPage() {
           </div>
 
           {/* Tabs */}
-          <div className="flex gap-1 bg-gray-100 p-1 rounded-xl w-fit">
+          <div className="flex gap-1 bg-gray-100 p-1 rounded-xl w-full overflow-x-auto">
             {TABS.map(({ key, label, icon: Icon }) => (
               <button
                 key={key}
@@ -270,7 +270,7 @@ export default function GroupDetailPage() {
       </div>
 
       {/* Tab Content */}
-      <div className="max-w-4xl mx-auto px-4 py-6">
+      <div className="max-w-4xl mx-auto px-3 md:px-4 py-4 md:py-6">
 
         {/* Notes Tab */}
         {activeTab === "notes" && (
@@ -319,7 +319,7 @@ export default function GroupDetailPage() {
               <p className="text-gray-500 text-sm mb-4">
                 Search by meaning — results come from all notes added by group members.
               </p>
-              <div className="flex gap-2">
+              <div className="flex flex-col sm:flex-row gap-2">
                 <input
                   type="text"
                   placeholder='Try: "how does photosynthesis work?"'
@@ -443,7 +443,7 @@ export default function GroupDetailPage() {
       {/* Add Note Modal */}
       {showAddNote && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center px-4">
-          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg p-6">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg p-4 md:p-6">
             <div className="flex justify-between items-center mb-5">
               <h2 className="text-xl font-bold text-gray-800">Add Note to Group</h2>
               <button onClick={() => { setShowAddNote(false); setNoteError(""); }} className="text-gray-400 hover:text-gray-600">
@@ -510,7 +510,7 @@ export default function GroupDetailPage() {
           className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center px-4"
           onClick={(e) => e.target === e.currentTarget && setSelectedDoc(null)}
         >
-          <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full p-6 relative max-h-[85vh] flex flex-col">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full p-4 md:p-6 relative max-h-[85vh] flex flex-col">
             <button onClick={() => setSelectedDoc(null)} className="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
               <X size={20} />
             </button>
@@ -654,7 +654,7 @@ function NoteCard({ doc, currentUser, onClick, score }) {
   return (
     <div
       onClick={onClick}
-      className="bg-white rounded-2xl shadow-md border border-gray-100 p-5 hover:shadow-xl transition-all hover:-translate-y-0.5 cursor-pointer"
+      className="bg-white rounded-2xl shadow-md border border-gray-100 p-4 md:p-5 hover:shadow-xl transition-all hover:-translate-y-0.5 cursor-pointer"
     >
       <div className="flex items-center gap-3 mb-3 pb-3 border-b border-gray-100">
         <div className="w-8 h-8 bg-gradient-to-br from-green-400 to-emerald-600 rounded-full flex items-center justify-center flex-shrink-0">

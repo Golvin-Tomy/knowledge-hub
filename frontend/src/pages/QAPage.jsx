@@ -79,7 +79,7 @@ export default function QAPage() {
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex flex-col">
       {/* Header */}
       <div className="bg-white shadow-sm border-b">
-        <div className="max-w-3xl mx-auto px-4 py-4 flex justify-between items-center">
+        <div className="max-w-3xl mx-auto px-4 py-4 flex flex-col sm:flex-row gap-3 sm:gap-0 justify-between items-start sm:items-center">
           <div>
             <h1 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
               <Bot className="text-purple-600" size={24} />
@@ -117,7 +117,7 @@ export default function QAPage() {
             </p>
 
             {/* Suggestion */}
-            <div className="flex flex-wrap gap-2 justify-center">
+            <div className="flex flex-col sm:flex-row flex-wrap gap-2 justify-center">
               {SUGGESTIONS.map((s) => (
                 <button
                   key={s}
@@ -136,7 +136,7 @@ export default function QAPage() {
           <div key={index} className="space-y-3">
             {/* User question bubble */}
             <div className="flex justify-end">
-              <div className="bg-purple-600 text-white px-4 py-3 rounded-2xl rounded-tr-sm max-w-[80%] text-sm leading-relaxed shadow-sm">
+              <div className="bg-purple-600 text-white px-4 py-3 rounded-2xl rounded-tr-sm max-w-[90%] sm:max-w-[80%] text-sm leading-relaxed shadow-sm">
                 {item.question}
               </div>
             </div>
@@ -146,7 +146,7 @@ export default function QAPage() {
               <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
                 <Bot size={16} className="text-purple-600" />
               </div>
-              <div className="flex-1 max-w-[85%]">
+              <div className="flex-1 max-w-[100%] sm:max-w-[85%]">
                 <div className="bg-white border border-gray-100 px-4 py-3 rounded-2xl rounded-tl-sm shadow-sm">
                   {item.answer === null ? (
                     <div className="flex items-center gap-2 text-purple-500 text-sm py-1">
@@ -182,7 +182,7 @@ export default function QAPage() {
                         {item.sources.map((src, i) => (
                           <div
                             key={src._id || i}
-                            className="flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-xl px-3 py-2"
+                            className="flex flex-col sm:flex-row items-start sm:items-center gap-2 bg-gray-50 border border-gray-200 rounded-xl px-3 py-2"
                           >
                             <span className="w-5 h-5 bg-purple-100 text-purple-700 rounded-full text-xs font-bold flex items-center justify-center flex-shrink-0">
                               {i + 1}
@@ -209,7 +209,7 @@ export default function QAPage() {
 
       <div className="sticky bottom-0 bg-white border-t border-gray-200 shadow-lg">
         <div className="max-w-3xl mx-auto px-4 py-4">
-          <div className="flex gap-2 items-end">
+          <div className="flex flex-col sm:flex-row gap-2 items-stretch sm:items-end">
             <textarea
               value={question}
               onChange={(e) => setQuestion(e.target.value)}
@@ -221,12 +221,12 @@ export default function QAPage() {
               }}
               placeholder="Ask a question from your notes... (Enter to send)"
               rows={1}
-              className="flex-1 p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none text-sm"
+              className="w-full sm:flex-1 p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none text-sm"
             />
             <button
               onClick={() => handleAsk()}
               disabled={loading || !question.trim()}
-              className="bg-purple-600 hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed text-white p-3 rounded-xl transition flex-shrink-0"
+              className="bg-purple-600 hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed text-white w-full sm:w-auto p-3 rounded-xl transition flex-shrink-0"
             >
               {loading ? (
                 <Loader2 size={18} className="animate-spin" />

@@ -1,9 +1,11 @@
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { LogOut, Users } from "lucide-react";
+import { useState } from "react";
 
 function Layout({ children }) {
   const navigate = useNavigate();
   const location = useLocation();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -21,24 +23,41 @@ function Layout({ children }) {
   return (
     <div className="min-h-screen bg-gray-50 text-gray-800">
       {/* Navbar */}
-      <nav className="bg-white shadow-md py-4 px-8 flex justify-between items-center">
-        {/* Left: Brand */}
+      <nav className="bg-white shadow-md py-4 px-4 md:px-8 flex justify-between items-center">
+        
+        {/* Brand */}
         <Link
           to="/dashboard"
-          className="text-2xl font-bold text-green-700 italic hover:text-green-800 transition-colors"
+          className="text-xl md:text-2xl font-bold text-green-700 italic"
         >
           KnowledgeHub
         </Link>
 
-        {/* Center: Nav Links */}
-        <div className="flex gap-6 text-gray-600 font-medium">
+        {/* Hamburger Button (Mobile only) */}
+        <button
+          className="md:hidden text-2xl"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          ☰
+        </button>
+
+        {/* Nav Links */}
+        <div
+          className={`
+            absolute md:static top-16 left-0 w-full md:w-auto bg-white md:bg-transparent
+            flex flex-col md:flex-row gap-4 md:gap-6 p-4 md:p-0
+            transition-all duration-300
+            ${menuOpen ? "block" : "hidden md:flex"}
+          `}
+        >
           {navLinks.map((link) => (
             <Link
               key={link.to}
               to={link.to}
+              onClick={() => setMenuOpen(false)}
               className={`hover:text-green-600 transition flex items-center gap-1 ${
                 location.pathname.startsWith(link.to)
-                  ? "text-green-600 font-semibold border-b-2 border-green-600 pb-0.5"
+                  ? "text-green-600 font-semibold"
                   : ""
               }`}
             >
@@ -46,12 +65,21 @@ function Layout({ children }) {
               {link.label}
             </Link>
           ))}
+
+          {/* Logout inside mobile menu */}
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-1 bg-red-600 text-white px-4 py-2 rounded-full md:hidden"
+          >
+            <LogOut size={18} />
+            Logout
+          </button>
         </div>
 
-        {/* Right: Logout */}
+        {/* Desktop Logout */}
         <button
           onClick={handleLogout}
-          className="flex items-center gap-1 bg-red-600 hover:bg-green-700 text-white px-4 py-2 rounded-full transition"
+          className="hidden md:flex items-center gap-1 bg-red-600 hover:bg-green-700 text-white px-4 py-2 rounded-full transition"
         >
           <LogOut size={18} />
           Logout
@@ -59,7 +87,7 @@ function Layout({ children }) {
       </nav>
 
       {/* Page Content */}
-      <main className="p-8">{children}</main>
+      <main className="p-4 md:p-8">{children}</main>
     </div>
   );
 }

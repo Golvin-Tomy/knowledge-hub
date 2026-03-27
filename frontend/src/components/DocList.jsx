@@ -11,7 +11,7 @@ export default function DocList({ docs, onEdit, onDelete }) {
   }
 
   return (
-    <div className="grid md:grid-cols-2 gap-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
       {docs.map((doc) => (
         <DocCard
           key={doc._id}
@@ -36,14 +36,14 @@ function DocCard({ doc, onEdit, onDelete }) {
       : doc.content;
 
   return (
-    <div className="bg-gray-50 border border-gray-200 rounded-xl p-5 shadow-sm hover:shadow-md transition duration-200 flex flex-col justify-between">
+    <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 sm:p-5 shadow-sm hover:shadow-md transition duration-200 flex flex-col justify-between">
       {/* Title */}
-      <h4 className="text-xl font-semibold text-green-700 mb-2">
+      <h4 className="text-lg sm:text-xl font-semibold text-green-700 mb-2">
         {doc.title}
       </h4>
 
       {/* Content with Read More toggle */}
-      <p className="text-gray-700 text-sm mb-2">
+      <p className="text-gray-700 text-sm sm:text-base mb-2">
         {truncatedContent}
         {doc.content.length > contentLimit && (
           <button
@@ -57,7 +57,7 @@ function DocCard({ doc, onEdit, onDelete }) {
 
       {/* Tags */}
       {doc.tags && doc.tags.length > 0 && (
-        <div className="flex flex-wrap gap-2 mb-3">
+        <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-3">
           {doc.tags.map((tag, i) => (
             <span
               key={i}
@@ -70,16 +70,16 @@ function DocCard({ doc, onEdit, onDelete }) {
       )}
 
       {/* Buttons */}
-      <div className="flex justify-end gap-3 mt-2">
+      <div className="flex flex-col sm:flex-row justify-end gap-2 sm:gap-3 mt-2">
         <button
           onClick={() => onEdit(doc)}
-          className="flex items-center gap-1 text-blue-600 hover:text-blue-800 text-sm font-medium"
+          className="flex items-center justify-center gap-1 w-full sm:w-auto text-blue-600 hover:text-blue-800 text-sm font-medium"
         >
           <Edit3 size={16} /> Edit
         </button>
         <button
           onClick={() => onDelete(doc._id)}
-          className="flex items-center gap-1 text-red-600 hover:text-red-800 text-sm font-medium"
+          className="flex items-center justify-center gap-1 w-full sm:w-auto text-red-600 hover:text-red-800 text-sm font-medium"
         >
           <Trash2 size={16} /> Delete
         </button>

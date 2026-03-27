@@ -112,13 +112,13 @@ export default function Dashboard() {
       {/* Header */}
       <div className="bg-white shadow-sm border-b">
         <div className="max-w-4xl mx-auto px-4 py-4">
-          <h1 className="text-2xl font-bold text-gray-800">Knowledge Hub Feed</h1>
+          <h1 className="text-lg md:text-2xl font-bold text-gray-800">Knowledge Hub Feed</h1>
         </div>
       </div>
 
-      <div className="max-w-2xl mx-auto px-4 py-8 space-y-8">
+      <div className="max-w-2xl md:max-w-3xl mx-auto px-3 md:px-4 py-6 md:py-8 space-y-6 md:space-y-8">
         {/* Feature Cards */}
-        <div className="grid md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {features.map((f, i) => (
             <div
               key={i}
@@ -180,10 +180,10 @@ export default function Dashboard() {
                 return (
                   <div
                     key={doc._id}
-                    className="bg-white rounded-2xl shadow-md border border-gray-100 p-6 hover:shadow-xl transition-all"
+                    className="bg-white rounded-2xl shadow-md border border-gray-100 p-4 md:p-6 hover:shadow-xl transition-all"
                   >
                     {/* Author row */}
-                    <div className="flex items-center gap-3 mb-4 pb-4 border-b border-gray-100">
+                    <div className="flex flex-wrap items-center gap-3 mb-4 pb-4 border-b border-gray-100">
                       <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center flex-shrink-0">
                         <span className="text-white font-semibold text-sm">
                           {authorName.charAt(0).toUpperCase()}
@@ -227,7 +227,7 @@ export default function Dashboard() {
                     </div>
 
                     {/* Content */}
-                    <h3 className="text-lg font-bold text-gray-800 mb-2 line-clamp-2">
+                    <h3 className="text-base md:text-lg font-bold text-gray-800 mb-2 line-clamp-2">
                       {doc.title}
                     </h3>
 
@@ -281,7 +281,7 @@ export default function Dashboard() {
                   <button
                     onClick={handleLoadMore}
                     disabled={loadingMore}
-                    className="flex items-center gap-2 bg-white border border-gray-300 hover:border-green-500 hover:text-green-600 text-gray-600 px-6 py-2.5 rounded-xl font-medium shadow-sm transition disabled:opacity-60"
+                    className="flex items-center gap-2 bg-white border px-4 md:px-6 py-2.5 rounded-xl border-gray-300 hover:border-green-500 hover:text-green-600 text-gray-600 px-6 py-2.5 rounded-xl font-medium shadow-sm transition disabled:opacity-60"
                   >
                     {loadingMore ? (
                       <Loader2 size={16} className="animate-spin" />
