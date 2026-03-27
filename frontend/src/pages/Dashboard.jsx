@@ -183,15 +183,15 @@ export default function Dashboard() {
                     className="bg-white rounded-2xl shadow-md border border-gray-100 p-4 md:p-6 hover:shadow-xl transition-all"
                   >
                     {/* Author row */}
-                    <div className="flex flex-wrap items-center gap-3 mb-4 pb-4 border-b border-gray-100">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4 pb-4 border-b border-gray-100">
                       <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center flex-shrink-0">
                         <span className="text-white font-semibold text-sm">
                           {authorName.charAt(0).toUpperCase()}
                         </span>
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="font-semibold text-gray-800 truncate">{authorName}</p>
-                        <p className="text-xs text-gray-500">
+                        <p className="font-semibold text-gray-800 text-sm sm:text-base truncate">{authorName}</p>
+                        <p className="text-[10px] sm:text-xs text-gray-500">
                           {new Date(doc.createdAt).toLocaleString()}
                         </p>
                       </div>
@@ -201,7 +201,7 @@ export default function Dashboard() {
                         <button
                           onClick={() => handleFollow(authorId)}
                           disabled={followLoading[authorId]}
-                          className={`flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full border transition flex-shrink-0 ${
+                          className={`flex items-center gap-1 text-[10px] sm:text-xs font-medium px-2.5 sm:px-3 py-1 sm:py-1.5 whitespace-nowrap rounded-full border transition flex-shrink-0 ${
                             isFollowing
                               ? "border-gray-300 text-gray-500 hover:border-red-300 hover:text-red-500"
                               : "border-green-500 text-green-600 hover:bg-green-50"
